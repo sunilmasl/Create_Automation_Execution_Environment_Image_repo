@@ -1,0 +1,77 @@
+ 1028  cat collections/requirements.yml
+ 
+ 1029  ################# creating collection ###################
+ 1030  ansible-galaxy collection init student.testcollection
+ 1031  tree student/testcollection/
+ 1032  cat student/testcollection/galaxy.yml | grep -Ev "^#|^$" 
+ 1033  cd student/testcollection/
+ 1035  mkdir meta
+ 1036  vi meta/runtime.yml
+ 1038  mkdir plugins/modules
+ 1039  cp ~/create-writing/myping.py  plugins/modules/
+ 1040  ls -l plugins/modules/
+ 1042  cd roles/
+ 1043  ansible-galaxy role init mymotd
+ 1045  cd mymotd/
+ 1046  ls -l
+ 1047  vi templates/motd.j2
+ 1048  ls -l
+ 1049  vi tasks/main.yml 
+ 1050  cd ..
+ 1056  rm -vr docs/ roles/mymotd/{defaults,files,tests,vars}
+ 1057  tree
+ 1060  clear
+ 1061  cd create-writing
+ 1062  ls -l
+ 1063  cd student/testcollection/
+ 1064  ls -l
+ 1065  ansible-galaxy collection build
+ 1068  cd ~/create-writing
+ 1069  ls -l
+ 1070  vi ansible.cfg 
+ 1071  cat collections/requirements.yml 
+ 1072  ls -l collections/
+ 1073  ansible-galaxy collection install -r collections/requirements.yml -p collections/
+ 1074  ls -l collections/
+ 1075  ls -l collections/ansible_collections/
+ 1077  cat site.yml 
+ 1078  cat ansible-navigator.yml 
+ 1079  ansible-navigator run site.yml  -m stdout
+ 1080  ssh serverd
+ 1081  ########## End of this GE ###############
+
+
+ 1145  lab start builder-custom
+ 1146  cd builder-custom
+ 1148  cd exercise.motd/
+ 1150  tar -xzf ../exercise.motd.tar.gz 
+ 1152  tree
+ 1153  cat roles/banner/templates/motd.j2
+ 1155  cat roles/banner/tasks/main.yml 
+ 1161  cd exercise.motd/
+ 1163  mkdir ~/builder-custom/ee-motd/
+ 1164  cd  ~/builder-custom/ee-motd/
+ 1168  cd ee-motd/
+ 1170  cat > execution-environment.yml
+ 1171  vi execution-environment.yml 
+ 1172  cat execution-environment.yml 
+ 1176  ls -l ~/builder-custom/solutions/
+ 1177  vi requirements.yml
+ 1178  clear
+ 1179  ls -l
+ 1180  cat requirements.yml 
+ 1181  ls -l
+ 1182  vi requirements.txt
+ 1183  vi bindep.txt
+ 1184  rpm -qa | grep ansible
+ 1185  sudo yum install ansible-builder
+ 1186  ansible-builder create
+ 1187  ls -l
+ 1188  tree 
+ 1189  cp ~/builder-custom/exercise.motd.tar.gz context/_build/
+ 1190  tree 
+ 1191  ansible-builder build -t ee-motd-minimal:1.0
+ 1192  podman images
+ 1193  rpm -qa | grep -i ansible
+ 1194  ansible-navigator images --pp never --eei localhost/ee-motd-minimal
+ 1197  podman images
